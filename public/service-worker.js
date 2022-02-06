@@ -2,6 +2,8 @@
 FILES_TO_CACHE = [
     "/",
     "/index.html",
+    "/index.js",
+    "/db.js",
     "/styles.css",
     "/manifest.webmanifest",
     "/icons/icon-512x512.png",
@@ -63,7 +65,8 @@ self.addEventListener("install", function(evt) {
               // Network request failed, try to get it from the cache.
               return cache.match(evt.request);
             });
-        }).catch(err => console.log(err))
+        })
+        .catch(err => console.log(err))
       );
   
       return;
