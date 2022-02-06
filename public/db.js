@@ -1,10 +1,10 @@
 let db;
 
-const request = indexedDB.open(budget_DB, 1);
+const request = indexedDB.open("budgetDB", 1);
 
 request.onupgradeneeded = (event) => {
     db = event.target.result;
-    db.creaateObjectStore("offline-store", { autoIncrement: true });
+    db.creaateObjectStore("offlineStore", { autoIncrement: true });
 };
 
 request.onerror = function (event) {
@@ -18,14 +18,14 @@ request.onsuccess = (event) => {
 };
 
 const saveRecord = (record) => {
-    const transaction = db.transaction(["offline-store"], "readwrite");
-    const store = transaction.objectStore("offline-store");
+    const transaction = db.transaction(["offlineStore"], "readwrite");
+    const store = transaction.objectStore("offlineStore");
     store.add(record);
 };
 
 function checkDB() {
-    const transaction = db.transaction(["offline-store"], "readwrite");
-    const store = transaction.objectStore("offline-store");
+    const transaction = db.transaction(["offlineStore"], "readwrite");
+    const store = transaction.objectStore("offlineStore");
     const getAll = store.getAll();
 
     getAll.onsuccess = function () {
@@ -42,10 +42,11 @@ function checkDB() {
                     return response.json();
                 })
                 .then(() => {
-                    const transaction = db.transaction(["offline-store"], "readwrite");
-                    const store = transaction.objectStore("offline-store");
+                    const transaction = db.transaction(["offlineStore"], "readwrite");
+                    const store = transaction.objectStore("offlineStore");
 
                     store.clear();
+                    
                 });
         }
     };
