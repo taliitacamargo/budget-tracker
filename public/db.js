@@ -25,6 +25,8 @@ request.onsuccess = (event) => {
     }
 };
 
+
+
 const saveRecord = (record) => {
     const transaction = db.transaction(["offlineStore"], "readwrite");
     const store = transaction.objectStore("offlineStore");
