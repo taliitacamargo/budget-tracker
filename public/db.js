@@ -1,10 +1,17 @@
+const indexedDB =
+  window.indexedDB ||
+  window.mozIndexedDB ||
+  window.webkitIndexedDB ||
+  window.msIndexedDB ||
+  window.shimIndexedDB;
+
 let db;
 
 const request = indexedDB.open("budgetDB", 1);
 
 request.onupgradeneeded = (event) => {
     db = event.target.result;
-    db.creaateObjectStore("offlineStore", { autoIncrement: true });
+    db.createObjectStore("offlineStore", { autoIncrement: true });
 };
 
 request.onerror = function (event) {
@@ -12,6 +19,7 @@ request.onerror = function (event) {
 };
 
 request.onsuccess = (event) => {
+    db = event.target.result;
     if (navigator.onLine) {
         checkDB();
     }
